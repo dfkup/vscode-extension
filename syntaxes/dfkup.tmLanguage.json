@@ -1,0 +1,347 @@
+{
+  "$schema": "https://raw.githubusercontent.com/martinring/tmlanguage/master/tmlanguage.json",
+  "name": "Dfkup",
+  "scopeName": "source.dfkup",
+  "fileTypes": ["dfkup", "kup"],
+  "patterns": [
+    {
+      "include": "#keywords"
+    },
+    {
+      "include": "#operators"
+    },
+    {
+      "include": "#string_literal"
+    },
+    {
+      "include": "#float_literal"
+    },
+    {
+      "include": "#integer_literal"
+    },
+    {
+      "include": "#boolean_literal"
+    },
+    {
+      "include": "#comment_literal"
+    },
+    {
+      "include": "#variable_literal"
+    },
+    {
+      "match": "[a-zA-Z]",
+      "name": "entity.other.attribute-name.dfkup"
+    }
+  ],
+  "repository": {
+    "control_keyword": {
+      "match": "\\b(if|elif|else|for|in|while|var|let|const|and|or|echo|return|fn|func|break|continue|discard|yield|type|object|iterator|true|false|nil)\\b",
+      "name": "keyword.control.dfkup"
+    },
+    "function_head": {
+      "patterns": [
+        {
+          "name": "meta.function.head.dfkup",
+          "begin": "\\b(func|fn|iterator)\\b\\s+([a-zA-Z_][a-zA-Z0-9_]*(\\*)?)\\s*\\(",
+          "beginCaptures": {
+            "1": { "name": "storage.type.function.dfkup" },
+            "2": { "name": "entity.name.function.dfkup" },
+            "3": { "name": "keyword.control.dfkup" }
+          },
+          "end": "\\)\\s*(:\\s*[a-zA-Z_][a-zA-Z0-9_<>]*)?\\s*(=|\\{)",
+          "endCaptures": {
+            "1": { "name": "storage.type.return-type.dfkup" },
+            "2": { "name": "punctuation.section.function.begin.dfkup" }
+          },
+          "patterns": [
+            {
+              "name": "variable.parameter.dfkup",
+              "match": "([a-zA-Z_][a-zA-Z0-9_]*)\\s*(?::\\s*([a-zA-Z_][a-zA-Z0-9_<>]*))?",
+              "captures": {
+                "1": { "name": "variable.parameter.name.dfkup" },
+                "2": { "name": "storage.type.parameter-type.dfkup" }
+              }
+            },
+            {
+              "match": "=",
+              "name": "keyword.operator.assignment.dfkup"
+            },
+            {
+              "match": ",",
+              "name": "punctuation.separator.parameter.dfkup"
+            },
+            { "include": "#integer_literal" },
+            { "include": "#float_literal" },
+            { "include": "#string_literal" },
+            { "include": "#boolean_literal" }
+          ]
+        }
+      ]
+    },
+    "keywords": {
+      "patterns": [
+        {
+          "include": "#function_head"
+        },
+        {
+          "include": "#control_keyword"
+        }
+      ]
+    },
+    "relational_operators": {
+      "match": "<|<=|>|>=|==|!=",
+      "name": "keyword.operator.dfkup"
+    },
+    "logical_operators": {
+      "match": "&&|\\|\\||:|\\?",
+      "name": "keyword.operator.dfkup"
+    },
+    "math_operators": {
+      "match": "[+\\-*/%^]",
+      "name": "keyword.operator.dfkup"
+    },
+    "operators": {
+      "patterns": [
+        {
+          "include": "#relational_operators"
+        },
+        {
+          "include": "#logical_operators"
+        },
+        {
+          "include": "#math_operators"
+        }
+      ]
+    },
+    "char_escapes": {
+      "patterns": [
+        {
+          "match": "\\\\[cC]|\\\\[rR]",
+          "name": "constant.character.escape.carriagereturn.dfkup"
+        },
+        {
+          "match": "\\\\[lL]|\\\\[nN]",
+          "name": "constant.character.escape.linefeed.dfkup"
+        },
+        {
+          "match": "\\\\[fF]",
+          "name": "constant.character.escape.formfeed.dfkup"
+        },
+        {
+          "match": "\\\\[tT]",
+          "name": "constant.character.escape.tabulator.dfkup"
+        },
+        {
+          "match": "\\\\[vV]",
+          "name": "constant.character.escape.verticaltabulator.dfkup"
+        },
+        {
+          "match": "\\\\\\\"",
+          "name": "constant.character.escape.double-quote.dfkup"
+        },
+        {
+          "match": "\\\\'",
+          "name": "constant.character.escape.single-quote.dfkup"
+        },
+        {
+          "match": "\\\\[0-9]+",
+          "name": "constant.character.escape.chardecimalvalue.dfkup"
+        },
+        {
+          "match": "\\\\[aA]",
+          "name": "constant.character.escape.alert.dfkup"
+        },
+        {
+          "match": "\\\\[bB]",
+          "name": "constant.character.escape.backspace.dfkup"
+        },
+        {
+          "match": "\\\\[eE]",
+          "name": "constant.character.escape.escape.dfkup"
+        },
+        {
+          "match": "\\\\[xX]\\h\\h",
+          "name": "constant.character.escape.hex.dfkup"
+        },
+        {
+          "match": "\\\\\\\\",
+          "name": "constant.character.escape.backslash.dfkup"
+        }
+      ]
+    },
+    "template_substitution_element": {
+      "begin": "\\$\\{",
+      "end": "}",
+      "beginCaptures": {
+        "0": {
+          "name": "meta.template.expression.begin.dfkup"
+        }
+      },
+      "endCaptures": {
+        "0": {
+          "name": "meta.template.expression.end.dfkup"
+        }
+      },
+      "patterns": [
+        {
+          "include": "source.dfkup"
+        }
+      ]
+    },
+    "single_quote_string": {
+      "begin": "'",
+      "end": "'",
+      "beginCaptures": {
+        "0": {
+          "name": "string.quoted.single.begin"
+        }
+      },
+      "endCaptures": {
+        "0": {
+          "name": "string.quoted.single.end"
+        }
+      },
+      "patterns": [
+        {
+          "include": "#char_escapes"
+        }
+      ],
+      "name": "string.quoted.single"
+    },
+    "double_quote_string": {
+      "begin": "\"",
+      "end": "\"",
+      "beginCaptures": {
+        "0": {
+          "name": "string.quoted.double.begin"
+        }
+      },
+      "endCaptures": {
+        "0": {
+          "name": "string.quoted.double.end"
+        }
+      },
+      "patterns": [
+        {
+          "include": "#char_escapes"
+        }
+      ],
+      "name": "string.quoted.double"
+    },
+    "triple_quote_string": {
+      "begin": "\"\"\"",
+      "end": "\"\"\"",
+      "beginCaptures": {
+        "0": {
+          "name": "string.quoted.triple.begin"
+        }
+      },
+      "endCaptures": {
+        "0": {
+          "name": "string.quoted.triple.end"
+        }
+      },
+      "patterns": [
+        {
+          "include": "#char_escapes"
+        }
+      ],
+      "name": "string.quoted.triple"
+    },
+    "backtick_template_string": {
+      "begin": "`",
+      "end": "`",
+      "patterns": [
+        {
+          "include": "#template_substitution_element"
+        },
+        {
+          "include": "#char_escapes"
+        }
+      ],
+      "name": "string.template.dfkup"
+    },
+    "string_literal": {
+      "patterns": [
+        {
+          "include": "#triple_quote_string"
+        },
+        {
+          "include": "#double_quote_string"
+        },
+        {
+          "include": "#single_quote_string"
+        },
+        {
+          "include": "#backtick_template_string"
+        }
+      ]
+    },
+    "integer_literal": {
+      "patterns": [
+        {
+          "match": "-?\\b(0[xX]\\h[_\\h]*)('(([iIuU](8|16|32|64))|[uU]))?",
+          "name": "constant.numeric.integer.hexadecimal.dfkup"
+        },
+        {
+          "match": "-?\\b(0o[0-7][_0-7]*)('(([iIuU](8|16|32|64))|[uU]))?",
+          "name": "constant.numeric.integer.octal.dfkup"
+        },
+        {
+          "match": "-?\\b(0(b|B)[01][_01]*)('(([iIuU](8|16|32|64))|[uU]))?",
+          "name": "constant.numeric.integer.binary.dfkup"
+        },
+        {
+          "match": "-?\\b(?<![^\\.]\\.)(\\d[_\\d]*)('(([iIuU](8|16|32|64))|[uU]))?",
+          "name": "constant.numeric.integer.decimal.dfkup"
+        }
+      ]
+    },
+    "float_literal": {
+      "patterns": [
+        {
+          "match": "-?\\b0[xX]\\h[_\\h]*'([fF](32|64|128)|[fFdD])",
+          "name": "constant.numeric.float.hexadecimal.dfkup"
+        },
+        {
+          "match": "-?\\b0o[0-7][_0-7]*'([fF](32|64|128)|[fFdD])",
+          "name": "constant.numeric.float.octal.dfkup"
+        },
+        {
+          "match": "-?\\b0(b|B)[01][_01]*'([fF](32|64|128)|[fFdD])",
+          "name": "constant.numeric.float.binary.dfkup"
+        },
+        {
+          "match": "-?\\b(?<![^\\.]\\.)(((\\d[_\\d]*)(\\.(\\d[_\\d]*))?'([fF](32|64|128)|[fFdD]))|((\\d[_\\d]*)(\\.(\\d[_\\d]*))?e(-)?(\\d[_\\d]*)'([fF](32|64|128)|[fFdD]))|((\\d[_\\d]*)(\\.(\\d[_\\d]*))?e(-)?(\\d[_\\d]*)(?![a-zA-Z\\.]))|((\\d[_\\d]*)(\\.(\\d[_\\d]*))))\\b",
+          "name": "constant.numeric.float.decimal.dfkup"
+        }
+      ]
+    },
+    "boolean_literal": {
+      "match": "\\b(true|false)\\b",
+      "name": "constant.language.dfkup"
+    },
+    "comment_literal": {
+      "patterns": [
+        {
+          "name": "comment.block.dfkup",
+          "begin": "/\\*",
+          "end": "\\*/"
+        },
+        {
+          "match": "(^|\\s)##.*$",
+          "name": "comment.line.double-hash.dfkup"
+        },
+        {
+          "match": "(^|\\s)#.*$",
+          "name": "comment.line.hash.dfkup"
+        }
+      ]
+    },
+    "variable_literal": {
+      "comment": "Every variable accessed by `$` prefix",
+      "name": "storage.type.variable",
+      "match": "\\$[a-zA-z_][a-zA-z0-9_]*"
+    }
+  }
+}

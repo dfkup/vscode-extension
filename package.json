@@ -1,0 +1,48 @@
+{
+  "name": "dfkup-vscode",
+  "version": "0.1.0",
+  "categories": [
+    "Programming Languages"
+  ],
+  "contributes": {
+    "languages": [
+      {
+        "id": "dfkup",
+        "icon": {
+          "light": "assets/dfkup.svg",
+          "dark": "assets/dfkup.svg"
+        },
+        "aliases": [
+          "Dfkup",
+          "dfkup"
+        ],
+        "extensions": [
+          "dfkup"
+        ],
+        "configuration": "language-configuration.json"
+      }
+    ],
+    "grammars": [
+      {
+        "language": "dfkup",
+        "scopeName": "source.dfkup",
+        "path": "syntaxes/dfkup.tmLanguage.json"
+      }
+    ]
+  },
+  "description": "Highlighting for the Dfkup scripting language",
+  "displayName": "dfkup",
+  "icon": "assets/dfkup.jpg",
+  "keywords": [
+    "dfkup",
+    "scripting language"
+  ],
+  "publisher": "OpenPeeps",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/onebuckapp/dfkup"
+  },
+  "engines": {
+    "vscode": "^1.87.0"
+  }
+}
