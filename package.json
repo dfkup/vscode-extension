@@ -9,8 +9,8 @@
       {
         "id": "dfkup",
         "icon": {
-          "light": "assets/dfkup.svg",
-          "dark": "assets/dfkup.svg"
+          "light": "assets/dfkup_light.svg",
+          "dark": "assets/dfkup_dark.svg"
         },
         "aliases": [
           "Dfkup",
